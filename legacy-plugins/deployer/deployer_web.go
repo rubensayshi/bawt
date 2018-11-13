@@ -5,11 +5,11 @@ import (
 
 	"golang.org/x/net/websocket"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/gorilla/mux"
 )
 
-func (dep *Deployer) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
+func (dep *Deployer) InitWebPlugin(bot *bawt.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
 	privRouter.Handle("/plugins/deployer.ws", websocket.Handler(dep.websocketManager))
 }
 

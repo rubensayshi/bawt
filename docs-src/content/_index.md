@@ -2,7 +2,7 @@
 title: home
 ---
 
-Slick is a Go-based ChatOps bot for Slack.
+bawt is a Go-based ChatOps bot for Slack.
 
 ## Features
 

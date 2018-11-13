@@ -3,21 +3,21 @@ package recognition
 import (
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
 	"github.com/boltdb/bolt"
+	"github.com/gopherworks/bawt"
 )
 
 type Plugin struct {
-	bot    *slick.Bot
+	bot    *bawt.Bot
 	config Config
 	store  Store
 }
 
 func init() {
-	slick.RegisterPlugin(&Plugin{})
+	bawt.RegisterPlugin(&Plugin{})
 }
 
-func (p *Plugin) InitPlugin(bot *slick.Bot) {
+func (p *Plugin) InitPlugin(bot *bawt.Bot) {
 	p.bot = bot
 
 	err := bot.DB.Update(func(tx *bolt.Tx) error {

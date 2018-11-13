@@ -1,4 +1,4 @@
-// Package vote is a plugin for Slick that aids in picking a lunch spot
+// Package vote is a plugin for bawt that aids in picking a lunch spot
 package vote
 
 import (
@@ -7,25 +7,25 @@ import (
 	"sync"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 type Vote struct {
-	bot          *slick.Bot
+	bot          *bawt.Bot
 	runningVotes map[string][]vote // votes per channel
 	mutex        sync.Mutex
 }
 
 func init() {
-	slick.RegisterPlugin(&Vote{
+	bawt.RegisterPlugin(&Vote{
 		runningVotes: make(map[string][]vote),
 	})
 }
 
-func (vote *Vote) InitPlugin(bot *slick.Bot) {
+func (vote *Vote) InitPlugin(bot *bawt.Bot) {
 	vote.bot = bot
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		PublicOnly:         true,
 		MessageHandlerFunc: vote.voteHandler,
 	})
@@ -36,7 +36,7 @@ type vote struct {
 	vote string
 }
 
-func (v *Vote) voteHandler(listen *slick.Listener, msg *slick.Message) {
+func (v *Vote) voteHandler(listen *bawt.Listener, msg *bawt.Message) {
 	v.mutex.Lock()
 	defer v.mutex.Unlock()
 

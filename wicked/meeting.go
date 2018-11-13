@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/nlopes/slack"
 )
 
 func init() {
-	slick.RegisterStringList("wicked annoyments", []string{
+	bawt.RegisterStringList("wicked annoyments", []string{
 		"friends, told you it was enough",
 		"can't you guys control yourselves!",
 		"I'm going to have to intervene!",
@@ -44,7 +44,7 @@ type Meeting struct {
 	doneCh     chan bool
 }
 
-func NewMeeting(id string, user *slack.User, goal string, bot *slick.Bot, channel *slick.Channel, uuidNow time.Time) *Meeting {
+func NewMeeting(id string, user *slack.User, goal string, bot *bawt.Bot, channel *bawt.Channel, uuidNow time.Time) *Meeting {
 	meeting := &Meeting{}
 	meeting.ID = id
 	meeting.Channel = channel.Name

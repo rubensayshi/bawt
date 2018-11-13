@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 type DeployParams struct {
@@ -14,7 +14,7 @@ type DeployParams struct {
 	DeploymentBranch string
 	InitiatedBy      string
 	From             string
-	initiatedByChat  *slick.Message
+	initiatedByChat  *bawt.Message
 }
 
 // ParsedTags returns *default* or user-specified tags

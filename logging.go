@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 import (
 	log "github.com/sirupsen/logrus"

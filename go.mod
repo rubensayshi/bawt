@@ -1,4 +1,4 @@
-module github.com/CapstoneLabs/slick
+module github.com/gopherworks/bawt
 
 require (
 	github.com/boltdb/bolt v1.3.1

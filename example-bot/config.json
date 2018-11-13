@@ -8,11 +8,11 @@
       "#some", "#other", "private_group"
     ],
     "web_base_url": "http://host.example.com",
-    "db_path": "./slick.bolt.db"
+    "db_path": "./bawt.bolt.db"
   },
 
   "Server":{
-    "pid_file": "/var/run/slick.pid-or-empty-string"
+    "pid_file": "/var/run/bawt.pid-or-empty-string"
   },
 
   "HealthCheck": {

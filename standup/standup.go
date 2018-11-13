@@ -1,10 +1,10 @@
-// Package standup is a plugin for Slick that facilitates standups for teams
+// Package standup is a plugin for bawt that facilitates standups for teams
 package standup
 
-import "github.com/CapstoneLabs/slick"
+import "github.com/gopherworks/bawt"
 
 type Standup struct {
-	bot            *slick.Bot
+	bot            *bawt.Bot
 	sectionUpdates chan sectionUpdate
 }
 
@@ -12,21 +12,21 @@ const TODAY = 0
 const WEEKAGO = -6 // [0,-6] == 7 days
 
 func init() {
-	slick.RegisterPlugin(&Standup{})
+	bawt.RegisterPlugin(&Standup{})
 }
 
-func (standup *Standup) InitPlugin(bot *slick.Bot) {
+func (standup *Standup) InitPlugin(bot *bawt.Bot) {
 	standup.bot = bot
 	standup.sectionUpdates = make(chan sectionUpdate, 15)
 
 	go standup.manageUpdatesInteraction()
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: standup.ChatHandler,
 	})
 }
 
-func (standup *Standup) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (standup *Standup) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	res := sectionRegexp.FindAllStringSubmatchIndex(msg.Text, -1)
 	if res != nil {
 		for _, section := range extractSectionAndText(msg.Text, res) {

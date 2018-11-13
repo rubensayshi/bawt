@@ -10,35 +10,35 @@ import (
 	"sync"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 )
 
 func init() {
-	slick.RegisterPlugin(&Faceoff{})
+	bawt.RegisterPlugin(&Faceoff{})
 }
 
 // Faceoff contains configuration for running faceoff
 type Faceoff struct {
 	sync.Mutex
 
-	bot   *slick.Bot
+	bot   *bawt.Bot
 	users map[string]*User
 }
 
 const faceoffKey = "/faceoff/users/stats"
 
 // InitPlugin establishes the regex and listeners
-func (p *Faceoff) InitPlugin(bot *slick.Bot) {
+func (p *Faceoff) InitPlugin(bot *bawt.Bot) {
 	p.bot = bot
 
 	faceoffRE := regexp.MustCompile("^!face[ _-]?off")
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		PublicOnly:     true,
 		Matches:        faceoffRE,
 		ListenForEdits: true,
-		MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+		MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 			// Launch a new game
 
 			g := &Game{
@@ -54,10 +54,10 @@ func (p *Faceoff) InitPlugin(bot *slick.Bot) {
 		},
 	})
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		PrivateOnly: true,
 		Matches:     faceoffRE,
-		MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+		MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 			user := p.users[msg.FromUser.ID]
 			if user == nil {
 				return
@@ -66,10 +66,10 @@ func (p *Faceoff) InitPlugin(bot *slick.Bot) {
 		},
 	})
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		PrivateOnly: true,
 		Matches:     faceoffRE,
-		EventHandlerFunc: func(listen *slick.Listener, ev interface{}) {
+		EventHandlerFunc: func(listen *bawt.Listener, ev interface{}) {
 			if _, ok := ev.(*slack.HelloEvent); ok {
 				log.Println("faceoff: loading data")
 				_ = p.bot.GetDBKey(faceoffKey, &p.users)

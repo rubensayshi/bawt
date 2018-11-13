@@ -8,16 +8,16 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/gorilla/mux"
 )
 
 func init() {
-	slick.RegisterPlugin(&Hooker{})
+	bawt.RegisterPlugin(&Hooker{})
 }
 
 type Hooker struct {
-	bot    *slick.Bot
+	bot    *bawt.Bot
 	config HookerConfig
 }
 
@@ -33,7 +33,7 @@ type MonitAlert struct {
 	Alert   string `json:"alert"`
 }
 
-func (hooker *Hooker) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
+func (hooker *Hooker) InitWebPlugin(bot *bawt.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
 	hooker.bot = bot
 
 	var conf struct {
@@ -42,7 +42,7 @@ func (hooker *Hooker) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubR
 	bot.LoadConfig(&conf)
 	hooker.config = conf.Hooker
 
-	pubRouter.HandleFunc("/public/updated_slick_repo", hooker.updatedSlickRepo)
+	pubRouter.HandleFunc("/public/updated_bawt_repo", hooker.updatedbawtRepo)
 
 	stripeUrl := fmt.Sprintf("/public/stripehook/%s", hooker.config.StripeSecret)
 	pubRouter.HandleFunc(stripeUrl, hooker.onPayingUser)
@@ -58,7 +58,7 @@ func (hooker *Hooker) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubR
 	})
 }
 
-func (hooker *Hooker) updatedSlickRepo(w http.ResponseWriter, r *http.Request) {
+func (hooker *Hooker) updatedbawtRepo(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Method not accepted", 405)
 		return

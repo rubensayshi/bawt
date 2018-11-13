@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 var sectionRegexp = regexp.MustCompile(`(?mi)^!(yesterday|today|blocking)`)
@@ -39,7 +39,7 @@ func extractSectionAndText(input string, res [][]int) []sectionMatch {
 	return out
 }
 
-func (standup *Standup) TriggerReminders(msg *slick.Message, section string) {
+func (standup *Standup) TriggerReminders(msg *bawt.Message, section string) {
 	standup.sectionUpdates <- sectionUpdate{section, msg}
 }
 
@@ -48,14 +48,14 @@ func (standup *Standup) TriggerReminders(msg *slick.Message, section string) {
 //
 
 func (standup *Standup) manageUpdatesInteraction() {
-	remindCh := make(chan *slick.Message)
-	resetCh := make(chan *slick.Message)
+	remindCh := make(chan *bawt.Message)
+	resetCh := make(chan *bawt.Message)
 
 	for {
 		select {
 		case update := <-standup.sectionUpdates:
 			// update.msg.FromUser appears to be nil and is causing a segmentation violation
-			// Update: &slick.Message{Msg:(*slack.Msg)(0xc0002d1680), SubMessage:(*slack.Msg)(nil), bot:(*slick.Bot)(0xc000182180), MentionsMe:true, IsEdit:false, FromMe:false, FromUser:(*slack.User)(nil), FromChannel:(*slick.Channel)(nil), Match:[]string(nil)}
+			// Update: &bawt.Message{Msg:(*slack.Msg)(0xc0002d1680), SubMessage:(*slack.Msg)(nil), bot:(*bawt.Bot)(0xc000182180), MentionsMe:true, IsEdit:false, FromMe:false, FromUser:(*slack.User)(nil), FromChannel:(*bawt.Channel)(nil), Match:[]string(nil)}
 			userEmail := update.msg.FromUser.Profile.Email
 			progress := userProgressMap[userEmail]
 			if progress == nil {
@@ -119,7 +119,7 @@ func (standup *Standup) manageUpdatesInteraction() {
 
 type sectionUpdate struct {
 	section string
-	msg     *slick.Message
+	msg     *bawt.Message
 }
 
 var userProgressMap = make(map[string]*userProgress)
@@ -129,7 +129,7 @@ type userProgress struct {
 	cancelTimer  chan bool
 }
 
-func (up *userProgress) waitAndCheckProgress(msg *slick.Message, remindCh chan *slick.Message) {
+func (up *userProgress) waitAndCheckProgress(msg *bawt.Message, remindCh chan *bawt.Message) {
 	select {
 	case <-time.After(90 * time.Second):
 		remindCh <- msg
@@ -139,7 +139,7 @@ func (up *userProgress) waitAndCheckProgress(msg *slick.Message, remindCh chan *
 }
 
 // waitForReset waits a couple of minutes and stops listening to that user altogether.  We want to poke the user once or twice if he's slow.. but not eternally.
-func (up *userProgress) waitForReset(msg *slick.Message, resetCh chan *slick.Message) {
+func (up *userProgress) waitForReset(msg *bawt.Message, resetCh chan *bawt.Message) {
 	<-time.After(15 * time.Minute)
 	resetCh <- msg
 }

@@ -1,0 +1,33 @@
+# Generated with `git shortlog -sne | cut -f 2 | sort | uniq`
+# This is the official list of Bawt authors for copyright purposes.
+# This file is distinct from the CONTRIBUTORS files.
+# See the latter for an explanation.
+
+# Names should be added to this file as:
+# Name or Organization <email address>
+# The email address is not required for organizations.
+
+3sky <3sky@protonmail.com>
+Alexandre Bourget <alex@bourget.cc>
+BRONSOLO <chuck.james.bronson@gmail.com>
+Ben Postlethwaite <post.ben.here@gmail.com>
+Capstone Metering, LLC
+Carlos Vazquez <fwcarlitos@icloud.com>
+Chuck Bronson <chuck.james.bronson@gmail.com>
+Dennis <dennisdereus@gmail.com>
+Etienne42 <etienne@passwordbox.com>
+Jack Wilsdon <jack.wilsdon@gmail.com>
+Jay Taylor <outtatime@gmail.com>
+Jesus Gutierrez <jesusgut24@gmail.com>
+Jody McIntyre <scjody@modernduck.com>
+KAWACHI Takashi <kawachi@p-lucky.net>
+Kilian Koeltzsch <me@kilian.io>
+Marc-André Beauchamp <marca.beauchamp@gmail.com>
+Marc-Antoine Ross <marc@proze.net>
+Matt Ouille <matthew.ouille@gmail.com>
+Ruben de Vries <ruben@rubensayshi.com>
+ben postlethwaite <post.ben.here@gmail.com>
+bosgood <bosgood@gmail.com>
+bpostlethwaite <post.ben.here@gmail.com>
+iwittkau <iwittkau@users.noreply.github.com>
+Étienne Tétreault-Pinard <etienne@plot.ly>

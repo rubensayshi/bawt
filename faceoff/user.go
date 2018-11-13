@@ -41,7 +41,7 @@ func (p *Faceoff) UpdateUsersWithChallengeResults(c *Challenge) {
 }
 
 type User struct {
-	// `slick.GetUser` ID
+	// `bawt.GetUser` ID
 	ID string
 	// Count of good answers, fastest or not.
 	RightAnswers int

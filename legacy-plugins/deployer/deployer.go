@@ -13,14 +13,14 @@ import (
 	"github.com/cskr/pubsub"
 	"github.com/kr/pty"
 
-	"github.com/CapstoneLabs/slick"
-	"github.com/CapstoneLabs/slick/internal"
+	"github.com/gopherworks/bawt"
+	"github.com/gopherworks/bawt/internal"
 	log "github.com/sirupsen/logrus"
 )
 
 type Deployer struct {
 	runningJob *DeployJob
-	bot        *slick.Bot
+	bot        *bawt.Bot
 	env        string
 	config     *DeployerConfig
 	pubsub     *pubsub.PubSub
@@ -38,10 +38,10 @@ type DeployerConfig struct {
 }
 
 func init() {
-	slick.RegisterPlugin(&Deployer{})
+	bawt.RegisterPlugin(&Deployer{})
 }
 
-func (dep *Deployer) InitPlugin(bot *slick.Bot) {
+func (dep *Deployer) InitPlugin(bot *bawt.Bot) {
 	var conf struct {
 		Deployer DeployerConfig
 	}
@@ -60,7 +60,7 @@ func (dep *Deployer) InitPlugin(bot *slick.Bot) {
 
 	go dep.pubsubForwardReply()
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: dep.ChatHandler,
 		MentionsMeOnly:     true,
 	})
@@ -92,7 +92,7 @@ type DeployJob struct {
 
 var deployFormat = regexp.MustCompile(`deploy( ([a-zA-Z0-9_\.-]+))? to ([a-z_-]+)( using ([a-zA-Z0-9_\.-]+))?((,| with)? tags?:? ?(.+))?`)
 
-func (dep *Deployer) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (dep *Deployer) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	bot := listen.Bot
 
 	// Discard non "mention_name, " prefixed messages

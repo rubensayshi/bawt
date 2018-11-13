@@ -1,4 +1,4 @@
-// Package todo is a plugin for Slick that creates to do lists per channel
+// Package todo is a plugin for bawt that creates to do lists per channel
 package todo
 
 import (
@@ -10,17 +10,17 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 func (p *Plugin) listenTodo() {
-	p.bot.Listen(&slick.Listener{
+	p.bot.Listen(&bawt.Listener{
 		Matches:            regexp.MustCompile(`^!todo.*`),
 		MessageHandlerFunc: p.handleTodo,
 	})
 }
 
-func (p *Plugin) handleTodo(listen *slick.Listener, msg *slick.Message) {
+func (p *Plugin) handleTodo(listen *bawt.Listener, msg *bawt.Message) {
 
 	idFormat := regexp.MustCompile(`^[a-z]{2}$`)
 	match := msg.Match
@@ -67,7 +67,7 @@ func (p *Plugin) handleTodo(listen *slick.Listener, msg *slick.Message) {
 	}
 }
 
-func (p *Plugin) detailTask(msg *slick.Message, id string) {
+func (p *Plugin) detailTask(msg *bawt.Message, id string) {
 	todo := p.store.Get(msg.Channel)
 	index, err := getTaskIndex(id, todo)
 	if err != nil {
@@ -82,7 +82,7 @@ func printTaskDetails(task *Task) string {
 	return fmt.Sprintf("%s\n> Created %s by <@%s>", task.String(), task.CreatedAt.Format("2006-01-02 15:04:05"), task.CreatedBy)
 }
 
-func (p *Plugin) createTask(msg *slick.Message, content string) {
+func (p *Plugin) createTask(msg *bawt.Message, content string) {
 	todo := p.store.Get(msg.Channel)
 
 	if len(todo) > 600 {
@@ -102,7 +102,7 @@ func (p *Plugin) createTask(msg *slick.Message, content string) {
 	msg.ReplyMention("added: " + task.String())
 }
 
-func (p *Plugin) appendToTask(msg *slick.Message, id, text string) {
+func (p *Plugin) appendToTask(msg *bawt.Message, id, text string) {
 	todo := p.store.Get(msg.Channel)
 	index, err := getTaskIndex(id, todo)
 	if err != nil {
@@ -117,7 +117,7 @@ func (p *Plugin) appendToTask(msg *slick.Message, id, text string) {
 	msg.ReplyMention("updated " + task.String())
 }
 
-func (p *Plugin) listTasks(msg *slick.Message) {
+func (p *Plugin) listTasks(msg *bawt.Message) {
 	todo := p.store.Get(msg.Channel)
 	sort.Sort(byID(todo))
 
@@ -140,7 +140,7 @@ func (p *Plugin) listTasks(msg *slick.Message) {
 	}
 }
 
-func (p *Plugin) deleteTask(msg *slick.Message, ids string, silent bool) {
+func (p *Plugin) deleteTask(msg *bawt.Message, ids string, silent bool) {
 	todo := p.store.Get(msg.Channel)
 
 	parts := strings.Split(msg.Match[0], " ")
@@ -181,7 +181,7 @@ func getTaskIndex(id string, todo Todo) (int, error) {
 	return 0, errors.New("Not found")
 }
 
-func (p *Plugin) replyHelp(msg *slick.Message, extra string) {
+func (p *Plugin) replyHelp(msg *bawt.Message, extra string) {
 	answer := extra + `Commands:` + "```" + `
 !todo add [some text]             - add task
 !todo                             - list tasks

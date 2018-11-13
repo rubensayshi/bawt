@@ -3,24 +3,24 @@ package main
 import (
 	"flag"
 
-	"github.com/CapstoneLabs/slick"
-	_ "github.com/CapstoneLabs/slick/bugger"
-	_ "github.com/CapstoneLabs/slick/faceoff"
-	_ "github.com/CapstoneLabs/slick/funny"
-	_ "github.com/CapstoneLabs/slick/healthy"
-	_ "github.com/CapstoneLabs/slick/hooker"
-	_ "github.com/CapstoneLabs/slick/mooder"
-	_ "github.com/CapstoneLabs/slick/plotberry"
-	_ "github.com/CapstoneLabs/slick/recognition"
-	_ "github.com/CapstoneLabs/slick/standup"
-	_ "github.com/CapstoneLabs/slick/todo"
-	_ "github.com/CapstoneLabs/slick/web"
-	_ "github.com/CapstoneLabs/slick/webauth"
-	_ "github.com/CapstoneLabs/slick/webutils"
-	_ "github.com/CapstoneLabs/slick/wicked"
+	"github.com/gopherworks/bawt"
+	_ "github.com/gopherworks/bawt/bugger"
+	_ "github.com/gopherworks/bawt/faceoff"
+	_ "github.com/gopherworks/bawt/funny"
+	_ "github.com/gopherworks/bawt/healthy"
+	_ "github.com/gopherworks/bawt/hooker"
+	_ "github.com/gopherworks/bawt/mooder"
+	_ "github.com/gopherworks/bawt/plotberry"
+	_ "github.com/gopherworks/bawt/recognition"
+	_ "github.com/gopherworks/bawt/standup"
+	_ "github.com/gopherworks/bawt/todo"
+	_ "github.com/gopherworks/bawt/web"
+	_ "github.com/gopherworks/bawt/webauth"
+	_ "github.com/gopherworks/bawt/webutils"
+	_ "github.com/gopherworks/bawt/wicked"
 )
 
-// Specify an alternative config file. Slick searches the working
+// Specify an alternative config file. bawt searches the working
 // directory and your home folder by default for a file called
 // `config.json`, `config.yaml`, or `config.toml` if no config
 // file is specified
@@ -29,7 +29,7 @@ var configFile = flag.String("config", "", "config file")
 func main() {
 	flag.Parse()
 
-	bot := slick.New(*configFile)
+	bot := bawt.New(*configFile)
 
 	bot.Run()
 }

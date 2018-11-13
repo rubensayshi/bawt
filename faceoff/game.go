@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 )
@@ -21,8 +21,8 @@ import (
 type Game struct {
 	// Channel in which the game is running
 	Faceoff         *Faceoff
-	OriginalMessage *slick.Message
-	Channel         *slick.Channel
+	OriginalMessage *bawt.Message
+	Channel         *bawt.Channel
 	Started         time.Time
 	GameCount       int // number of games we did
 	Challenges      []*Challenge
@@ -111,10 +111,10 @@ func (g *Game) showChallenge(c *Challenge, lookedForUser slack.User, pngContent 
 	// so we'd need to keep a few FileCreated thing.. for a few seconds, and then ...
 	// link them together.
 
-	g.Faceoff.bot.ListenReaction(ts, &slick.ReactionListener{
+	g.Faceoff.bot.ListenReaction(ts, &bawt.ReactionListener{
 		ListenDuration: 60 * time.Second,
-		Type:           slick.ReactionAdded,
-		HandlerFunc: func(listen *slick.ReactionListener, ev *slick.ReactionEvent) {
+		Type:           bawt.ReactionAdded,
+		HandlerFunc: func(listen *bawt.ReactionListener, ev *bawt.ReactionEvent) {
 			log.Println("*************************************** HANDLING USER REPLY")
 			idx := -1
 			switch ev.Emoji {
@@ -137,7 +137,7 @@ func (g *Game) showChallenge(c *Challenge, lookedForUser slack.User, pngContent 
 
 			listen.ResetNewDuration(10 * time.Second)
 		},
-		TimeoutFunc: func(listen *slick.ReactionListener) {
+		TimeoutFunc: func(listen *bawt.ReactionListener) {
 			defer listen.Close()
 
 			if len(c.Replies) == 0 {

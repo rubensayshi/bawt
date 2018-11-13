@@ -1,4 +1,4 @@
-// Package healthy is a Slick plugin that evaluates whether URLs return 200's or not
+// Package healthy is a bawt plugin that evaluates whether URLs return 200's or not
 package healthy
 
 import (
@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -16,11 +16,11 @@ type Healthy struct {
 }
 
 func init() {
-	slick.RegisterPlugin(&Healthy{})
+	bawt.RegisterPlugin(&Healthy{})
 }
 
 // InitPlugin loads configuration and listens for new messages
-func (healthy *Healthy) InitPlugin(bot *slick.Bot) {
+func (healthy *Healthy) InitPlugin(bot *bawt.Bot) {
 	var conf struct {
 		HealthCheck struct {
 			Urls []string
@@ -31,7 +31,7 @@ func (healthy *Healthy) InitPlugin(bot *slick.Bot) {
 
 	healthy.urls = conf.HealthCheck.Urls
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MentionsMeOnly:     true,
 		ContainsAny:        []string{"health", "healthy?", "health_check"},
 		MessageHandlerFunc: healthy.ChatHandler,
@@ -39,7 +39,7 @@ func (healthy *Healthy) InitPlugin(bot *slick.Bot) {
 }
 
 // ChatHandler replies to the end user
-func (healthy *Healthy) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (healthy *Healthy) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	log.Println("Health check. Requested by", msg.FromUser.Name)
 	msg.Reply(healthy.CheckAll())
 }

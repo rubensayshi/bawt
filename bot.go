@@ -1,5 +1,5 @@
-// Package slick is a ChatOps framework for Slack
-package slick
+// Package bawt is a ChatOps framework for Slack
+package bawt
 
 import (
 	"encoding/json"
@@ -19,7 +19,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Bot is the main slick bot instance. It is passed throughout, and
+// Bot is the main bawt bot instance. It is passed throughout, and
 // has references to most useful objects.
 type Bot struct {
 	// Global bot configuration
@@ -56,8 +56,8 @@ type Bot struct {
 }
 
 // New returns a new bot instance, initialized with the provided config
-// file. If an empty string is provided as the config file path, Slick
-// searches the working directy and $HOME/.slick/ for a file called
+// file. If an empty string is provided as the config file path, bawt
+// searches the working directy and $HOME/.bawt/ for a file called
 // config.json|toml|yaml instead
 func New(configFile string) *Bot {
 	bot := &Bot{
@@ -179,7 +179,7 @@ func (bot *Bot) writePID() error {
 // handling functions on a Listener: MessageHandlerFunc and EventHandlerFunc.
 // MessageHandlerFunc is filtered by a bunch of other properties of the Listener,
 // whereas EventHandlerFunc will receive all events unfiltered, but with
-// *slick.Message instead of a raw *slack.MessageEvent (it's in there anyway),
+// *bawt.Message instead of a raw *slack.MessageEvent (it's in there anyway),
 // which adds a bunch of useful methods to it.
 //
 // Explore the Listener for more details.
@@ -303,8 +303,8 @@ func (bot *Bot) readInConfig() {
 	// Use viper to find a default config file, or open the provided file is set
 	if bot.configFile == "" {
 		viper.SetConfigName("config")
-		viper.AddConfigPath(".")            // Look for config in the working directory
-		viper.AddConfigPath("$HOME/.slick") // Look for config in .slick folder in home directory
+		viper.AddConfigPath(".")           // Look for config in the working directory
+		viper.AddConfigPath("$HOME/.bawt") // Look for config in .bawt folder in home directory
 	} else {
 		// Ensure the config file cannot be read of write by others
 		if err := checkPermission(bot.configFile); err != nil {

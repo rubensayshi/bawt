@@ -1,7 +1,7 @@
-baseURL: "https://capstonelabs.github.io/slick/"
+baseURL: "https://capstonelabs.github.io/bawt/"
 languageCode: "en-us"
 defaultContentLanguage: "en"
-title: "Slick"
+title: "bawt"
 theme: "hugo-theme-learn"
 publishDir: ../docs
 
@@ -9,7 +9,7 @@ params:
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page. 
   # Useful to give opportunity to people to create merge request for your doc.
   # See the config.toml file from this documentation site to have an example.
-  editURL: "https://github.com/CapstoneLabs/slick/tree/master/content/docs-src"
+  editURL: "https://github.com/gopherworks/bawt/tree/master/content/docs-src"
   # Description of the site, will be used in meta information
   description: "a ChatOps Slackbot written in Go"
   # Shows a checkmark for visited pages on the menu
@@ -48,7 +48,7 @@ Languages:
       shortcuts:
       - name: "<i class='fab fa-fw fa-github'></i> Github repo"
         identifier: "ds"
-        url: "https://github.com/CapstoneLabs/slick"
+        url: "https://github.com/gopherworks/bawt"
         weight: 10
       - name: "<i class='fas fa-fw fa-bookmark'></i> Hugo Documentation"
         identifier: "hugodoc"

@@ -6,19 +6,19 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
-	"github.com/CapstoneLabs/slick/github"
-	"github.com/CapstoneLabs/slick/util"
+	"github.com/gopherworks/bawt"
+	"github.com/gopherworks/bawt/github"
+	"github.com/gopherworks/bawt/util"
 )
 
 const dfltReportLength = 7 // days
 
 func init() {
-	slick.RegisterPlugin(&Bugger{})
+	bawt.RegisterPlugin(&Bugger{})
 }
 
 type Bugger struct {
-	bot      *slick.Bot
+	bot      *bawt.Bot
 	ghclient github.Client
 }
 
@@ -53,7 +53,7 @@ func (bugger *Bugger) makeBugReporter(days int) (reporter bugReporter) {
 	return
 }
 
-func (bugger *Bugger) InitPlugin(bot *slick.Bot) {
+func (bugger *Bugger) InitPlugin(bot *bawt.Bot) {
 
 	/*
 	 * Get an array of issues matching Filters
@@ -70,13 +70,13 @@ func (bugger *Bugger) InitPlugin(bot *slick.Bot) {
 		Conf: conf.Github,
 	}
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: bugger.ChatHandler,
 	})
 
 }
 
-func (bugger *Bugger) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (bugger *Bugger) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 
 	if !msg.MentionsMe {
 		return
@@ -122,7 +122,7 @@ examples: %s, please give me a %s over the last 5 days
 
 }
 
-func (bugger *Bugger) messageReport(days int, msg *slick.Message, listen *slick.Listener, genReport func() string) {
+func (bugger *Bugger) messageReport(days int, msg *bawt.Message, listen *bawt.Listener, genReport func() string) {
 
 	if days > 31 {
 		msg.Reply(fmt.Sprintf("Whaoz, %d is too much data to compile - well maybe not, I am just scared", days))

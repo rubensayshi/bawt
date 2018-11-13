@@ -1,4 +1,4 @@
-// Package asana is a plugin for Slick that interacts with Asana
+// Package asana is a plugin for bawt that interacts with Asana
 package asana
 
 import (

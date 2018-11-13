@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 import (
 	"fmt"
@@ -79,9 +79,9 @@ type Listener struct {
 	// EventHandlerFunc is a handling function provided by the user, and
 	// called when any event is received. These messages are dispatched
 	// to each Listener in turn, after the bot has processed it.
-	// If the event is a Message, then the `slick.Message` will be non-nil.
+	// If the event is a Message, then the `bawt.Message` will be non-nil.
 	//
-	// When receiving a `*slack.MessageEvent`, slick will wrap it in a `*slick.Message`
+	// When receiving a `*slack.MessageEvent`, bawt will wrap it in a `*bawt.Message`
 	// which embeds the the original event, but adds quite a few functionalities, like
 	// reply modes, etc..
 	EventHandlerFunc func(*Listener, interface{})

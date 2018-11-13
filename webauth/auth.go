@@ -7,20 +7,20 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/nlopes/slack"
 	"golang.org/x/oauth2"
 )
 
 func init() {
 	oauth2.RegisterBrokenAuthHeaderProvider("https://slack.com/")
-	slick.RegisterPlugin(&OAuthPlugin{})
+	bawt.RegisterPlugin(&OAuthPlugin{})
 	gob.Register(&slack.User{})
 }
 
 type OAuthPlugin struct {
 	config    OAuthConfig
-	webserver slick.WebServer
+	webserver bawt.WebServer
 }
 
 type OAuthConfig struct {
@@ -29,7 +29,7 @@ type OAuthConfig struct {
 	ClientSecret string `json:"client_secret" mapstructure:"client_secret"`
 }
 
-func (p *OAuthPlugin) InitWebServerAuth(bot *slick.Bot, webserver slick.WebServer) {
+func (p *OAuthPlugin) InitWebServerAuth(bot *bawt.Bot, webserver bawt.WebServer) {
 	p.webserver = webserver
 
 	var config struct {
@@ -76,9 +76,9 @@ func (p *OAuthPlugin) AuthenticatedUser(r *http.Request) (*slack.User, error) {
 type OAuthMiddleware struct {
 	handler   http.Handler
 	plugin    *OAuthPlugin
-	webserver slick.WebServer
+	webserver bawt.WebServer
 	oauthCfg  *oauth2.Config
-	bot       *slick.Bot
+	bot       *bawt.Bot
 }
 
 func (mw *OAuthMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {

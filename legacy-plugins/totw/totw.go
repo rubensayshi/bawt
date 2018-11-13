@@ -6,19 +6,19 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 type Totw struct {
-	bot *slick.Bot
+	bot *bawt.Bot
 }
 
 func init() {
-	slick.RegisterPlugin(&Totw{})
+	bawt.RegisterPlugin(&Totw{})
 }
 
-func (totw *Totw) InitPlugin(bot *slick.Bot) {
-	slick.RegisterStringList("useless techs", []string{
+func (totw *Totw) InitPlugin(bot *bawt.Bot) {
+	bawt.RegisterStringList("useless techs", []string{
 		"http://i.minus.com/ib2bUNs2W1CI1V.gif",
 		"http://media.giphy.com/media/anl0wydLNhKus/giphy.gif",
 		"http://www.ptc.dcs.edu/Moody/comphistory/cavemanwriting.gif",
@@ -31,7 +31,7 @@ func (totw *Totw) InitPlugin(bot *slick.Bot) {
 		"http://i3.kym-cdn.com/photos/images/original/000/495/044/9b8.gif",
 		"http://uproxx.files.wordpress.com/2012/09/iron.gif",
 	})
-	slick.RegisterStringList("tech adept", []string{
+	bawt.RegisterStringList("tech adept", []string{
 		"you're a real tech adept",
 		"what an investigator",
 		"such deep search!",
@@ -48,25 +48,25 @@ func (totw *Totw) InitPlugin(bot *slick.Bot) {
 
 	go totw.ScheduleAlerts(bot.Config.GeneralChannel, time.Thursday, 16, 0)
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: totw.ChatHandler,
 	})
 }
 
-func (totw *Totw) ChatHandler(conv *slick.Listener, msg *slick.Message) {
+func (totw *Totw) ChatHandler(conv *bawt.Listener, msg *bawt.Message) {
 	if strings.HasPrefix(msg.Text, "!totw") || strings.HasPrefix(msg.Text, "!techoftheweek") {
-		msg.ReplyMention(slick.RandomString("tech adept"))
+		msg.ReplyMention(bawt.RandomString("tech adept"))
 	}
 }
 
 func (totw *Totw) ScheduleAlerts(channel string, w time.Weekday, hour, min int) {
 	for {
-		next, when := slick.NextWeekdayTime(time.Now(), w, hour, min)
+		next, when := bawt.NextWeekdayTime(time.Now(), w, hour, min)
 		log.Println("TOTW: Next occurrence: ", next)
 
 		<-time.After(when)
 
-		totw.bot.SendToChannel(channel, slick.RandomString("useless techs"))
+		totw.bot.SendToChannel(channel, bawt.RandomString("useless techs"))
 		totw.bot.SendToChannel(channel, `Time for some Tech of the Week! What's your pick ?  Start your line with "!techoftheweek"`)
 	}
 }

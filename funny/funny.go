@@ -5,19 +5,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 type Funny struct {
 }
 
 func init() {
-	slick.RegisterPlugin(&Funny{})
+	bawt.RegisterPlugin(&Funny{})
 }
 
-func (funny *Funny) InitPlugin(bot *slick.Bot) {
+func (funny *Funny) InitPlugin(bot *bawt.Bot) {
 
-	slick.RegisterStringList("forcePush", []string{
+	bawt.RegisterStringList("forcePush", []string{
 		"http://www.gifcrap.com/g2data/albums/TV/Star%20Wars%20-%20Force%20Push%20-%20Goats%20fall%20over.gif",
 		"http://i.imgur.com/ZvZR6Ff.jpg",
 		"http://i3.kym-cdn.com/photos/images/original/000/014/538/5FCNWPLR2O3TKTTMGSGJIXFERQTAEY2K.gif",
@@ -35,7 +35,7 @@ func (funny *Funny) InitPlugin(bot *slick.Bot) {
 		"http://img2.wikia.nocookie.net/__cb20131117184206/halo/images/2/2a/Xt0rt3r.gif",
 	})
 
-	slick.RegisterStringList("robot jokes", []string{
+	bawt.RegisterStringList("robot jokes", []string{
 		"http://timmybeanbrain.files.wordpress.com/2012/05/05242012_02-01.jpg",
 		"http://timmybeanbrain.files.wordpress.com/2012/05/05242012_01-01.jpg",
 		"http://timmybeanbrain.files.wordpress.com/2012/05/05232012_01-01.jpg",
@@ -43,24 +43,24 @@ func (funny *Funny) InitPlugin(bot *slick.Bot) {
 		"http://timmybeanbrain.files.wordpress.com/2012/07/07022012_04-01.jpg",
 	})
 
-	slick.RegisterStringList("dishes", []string{
+	bawt.RegisterStringList("dishes", []string{
 		"http://stream1.gifsoup.com/view6/4703823/monkey-doing-dishes-o.gif",
 		"http://s3-ec.buzzfed.com/static/enhanced/webdr06/2013/6/24/16/anigif_enhanced-buzz-9769-1372104764-13.gif",
 		"http://i.imgur.com/WIL27Br.gif",
 	})
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: funny.ChatHandler,
 	})
 }
 
-func (funny *Funny) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (funny *Funny) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	bot := listen.Bot
 
 	if msg.Contains("mama") {
-		listen.Bot.Listen(&slick.Listener{
+		listen.Bot.Listen(&bawt.Listener{
 			ListenDuration: time.Duration(10 * time.Second),
-			MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+			MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 				if strings.Contains(msg.Text, "papa") {
 					msg.Reply("3s", "yo rocker").DeleteAfter("3s")
 					msg.AddReaction("wink")
@@ -78,11 +78,11 @@ func (funny *Funny) ChatHandler(listen *slick.Listener, msg *slick.Message) {
 	if msg.MentionsMe {
 		if msg.Contains("you're funny") {
 
-			if bot.Mood == slick.Happy {
+			if bot.Mood == bawt.Happy {
 				msg.Reply("/me blushes")
 			} else {
 				msg.Reply("here's another one")
-				msg.Reply(slick.RandomString("robot jokes"))
+				msg.Reply(bawt.RandomString("robot jokes"))
 			}
 
 		} else if msg.ContainsAny([]string{"dumb ass", "dumbass"}) {
@@ -94,16 +94,16 @@ func (funny *Funny) ChatHandler(listen *slick.Listener, msg *slick.Message) {
 
 		} else if msg.Contains("how are you") && msg.MentionsMe {
 			msg.ReplyMention(bot.WithMood("good, and you ?", "I'm wild today!! wadabout you ?"))
-			bot.Listen(&slick.Listener{
+			bot.Listen(&bawt.Listener{
 				ListenDuration: 60 * time.Second,
 				FromUser:       msg.FromUser,
 				FromChannel:    msg.FromChannel,
 				MentionsMeOnly: true,
-				MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+				MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 					msg.ReplyMention(bot.WithMood("glad to hear it!", "zwweeeeeeeeet !"))
 					listen.Close()
 				},
-				TimeoutFunc: func(listen *slick.Listener) {
+				TimeoutFunc: func(listen *bawt.Listener) {
 					msg.ReplyMention("well, we can catch up later")
 					listen.Close()
 				},
@@ -121,7 +121,7 @@ func (funny *Funny) ChatHandler(listen *slick.Listener, msg *slick.Message) {
 
 	} else if msg.Contains("force push") {
 
-		url := slick.RandomString("forcePush")
+		url := bawt.RandomString("forcePush")
 		msg.Reply(url)
 
 	} else if msg.ContainsAny([]string{"there is a bug", "there's a bug"}) {
@@ -197,7 +197,7 @@ func (funny *Funny) ChatHandler(listen *slick.Listener, msg *slick.Message) {
 		msg.Reply("yeah, theory and practice perfectly match... in theory.")
 	} else if msg.Contains("dishes") {
 
-		msg.Reply(slick.RandomString("dishes"))
+		msg.Reply(bawt.RandomString("dishes"))
 
 	} else if msg.Contains(" bean") {
 

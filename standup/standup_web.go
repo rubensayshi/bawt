@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/gorilla/mux"
 )
 
-func (standup *Standup) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
+func (standup *Standup) InitWebPlugin(bot *bawt.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
 	// privRouter.HandleFunc("/plugins/standup.json", func(w http.ResponseWriter, r *http.Request) {
 	// 	data := struct {
 	// 		Users []*StandupUser

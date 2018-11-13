@@ -1,4 +1,4 @@
-// Package recognition is a plugin for Slick that recognizes team members
+// Package recognition is a plugin for bawt that recognizes team members
 package recognition
 
 import (
@@ -7,19 +7,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 )
 
 func (p *Plugin) listenRecognize() {
-	p.bot.Listen(&slick.Listener{
+	p.bot.Listen(&bawt.Listener{
 		Matches:            regexp.MustCompile(`!recognize ((<@U[A-Z0-9]+(|[a-zA-Z0-9_-])?>(, ?| and )?)+) for (.*)`),
 		MessageHandlerFunc: p.handleRecognize,
 	})
 }
 
-func (p *Plugin) handleRecognize(listen *slick.Listener, msg *slick.Message) {
+func (p *Plugin) handleRecognize(listen *bawt.Listener, msg *bawt.Message) {
 	users := msg.Match[1]
 	feat := msg.Match[5]
 

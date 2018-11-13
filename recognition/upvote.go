@@ -5,13 +5,13 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 func (p *Plugin) listenUpvotes() {
-	p.bot.Listen(&slick.Listener{
-		EventHandlerFunc: func(_ *slick.Listener, event interface{}) {
-			react := slick.ParseReactionEvent(event)
+	p.bot.Listen(&bawt.Listener{
+		EventHandlerFunc: func(_ *bawt.Listener, event interface{}) {
+			react := bawt.ParseReactionEvent(event)
 			if react == nil {
 				return
 			}
@@ -39,9 +39,9 @@ func (p *Plugin) listenUpvotes() {
 	})
 }
 
-func (p *Plugin) upvoteRecognition(recognition *Recognition, reaction *slick.ReactionEvent) {
+func (p *Plugin) upvoteRecognition(recognition *Recognition, reaction *bawt.ReactionEvent) {
 	direction := 1
-	if reaction.Type == slick.ReactionRemoved {
+	if reaction.Type == bawt.ReactionRemoved {
 		direction = -1
 	}
 	recognition.Reactions[reaction.User] += direction

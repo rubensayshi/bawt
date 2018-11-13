@@ -1,8 +1,8 @@
-![Build Status](https://travis-ci.com/CapstoneLabs/slick.svg?branch=master)
+![Build Status](https://travis-ci.com/gopherworks/bawt.svg?branch=master)
 
-# Slick - A Slack bot in Go
+# bawt - A Slack bot in Go
 
-Slick is a Slack bot to do ChatOps and other cool things. Slick was originally developed [here](https://github.com/abourget/slick) and has since been adopted by Capstone for internal use :)
+bawt is a Slack bot to do ChatOps and other cool things. bawt was originally developed [here](https://github.com/abourget/slick) and has since been adopted  and sponsored by Capstone :)
 
 
 ## Features
@@ -35,7 +35,7 @@ Supported features:
 
 1. Recognition: a plugin to recognize your peers (!recognize @user1 for doing an awesome job)
 
-2. Faceoff: a game to learn the names and faces of your colleagues. The code for this one is interesting to learn to build interactive features with `slick`.
+2. Faceoff: a game to learn the names and faces of your colleagues. The code for this one is interesting to learn to build interactive features with `bawt`.
 
 3. Vote: a simple voting plugin to decide where to lunch
 
@@ -53,8 +53,8 @@ Supported features:
 Try it with:
 
 ```shell
-go get github.com/CapstoneLabs/slick
-cd $GOPATH/src/github.com/CapstoneLabs/slick/example-bot
+go get github.com/gopherworks/bawt
+cd $GOPATH/src/github.com/gopherworks/bawt/example-bot
 go install -v && $GOPATH/bin/example-bot
 ```
 
@@ -69,10 +69,10 @@ Example code to handle deployments:
 // listenDeploy was hooked into a plugin elsewhere..
 func listenDeploy() {
 	keywords := []string{"project1", "project2", "project3"}
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		Matches:        regexp.MustCompile("(can you|could you|please|plz|c'mon|icanhaz) deploy (" + strings.Join(keywords, "|") + ") (with|using)( revision| commit)? `?([a-z0-9]{4,42})`?"),
 		MentionsMeOnly: true,
-		MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+		MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 
 			projectName := msg.Match[2]
 			revision := msg.Match[5]

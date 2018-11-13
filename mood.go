@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 type Mood int
 

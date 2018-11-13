@@ -9,11 +9,11 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	"github.com/gorilla/mux"
 )
 
-func (wicked *Wicked) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
+func (wicked *Wicked) InitWebPlugin(bot *bawt.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
 	privRouter.HandleFunc("/wicked/{id}.json", wicked.renderMeetingJson)
 	privRouter.HandleFunc("/wicked/{id}.html", wicked.renderMeetingHtml)
 }

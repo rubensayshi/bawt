@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-const slickDBDefaultBucket = "slick"
+const bawtDBDefaultBucket = "bawt"
 
 // GetDBKey retrieves a `key` from persistent storage and JSON
 // unmarshales it into `v`.  We need to `Update` otherwise
@@ -15,7 +15,7 @@ const slickDBDefaultBucket = "slick"
 // an error immediately.
 func (bot *Bot) GetDBKey(key string, v interface{}) error {
 	return bot.DB.Update(func(tx *bolt.Tx) error {
-		bucket, err := tx.CreateBucketIfNotExists([]byte(slickDBDefaultBucket))
+		bucket, err := tx.CreateBucketIfNotExists([]byte(bawtDBDefaultBucket))
 		if err != nil {
 			return err
 		}
@@ -38,7 +38,7 @@ func (bot *Bot) GetDBKey(key string, v interface{}) error {
 // it JSON marshals the value before storing it.
 func (bot *Bot) PutDBKey(key string, v interface{}) error {
 	return bot.DB.Update(func(tx *bolt.Tx) error {
-		bucket, err := tx.CreateBucketIfNotExists([]byte(slickDBDefaultBucket))
+		bucket, err := tx.CreateBucketIfNotExists([]byte(bawtDBDefaultBucket))
 		if err != nil {
 			return err
 		}

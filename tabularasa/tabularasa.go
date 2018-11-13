@@ -5,20 +5,20 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/CapstoneLabs/slick"
-	"github.com/CapstoneLabs/slick/asana"
+	"github.com/gopherworks/bawt"
+	"github.com/gopherworks/bawt/asana"
 	"github.com/gorilla/mux"
 )
 
 type TabulaRasa struct {
-	bot         *slick.Bot
+	bot         *bawt.Bot
 	asanaClient *asana.Client
 }
 
 func init() {
-	slick.RegisterPlugin(&TabulaRasa{})
+	bawt.RegisterPlugin(&TabulaRasa{})
 }
-func (tabula *TabulaRasa) InitWebPlugin(bot *slick.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
+func (tabula *TabulaRasa) InitWebPlugin(bot *bawt.Bot, privRouter *mux.Router, pubRouter *mux.Router) {
 	var asanaConf struct {
 		Asana struct {
 			APIKey    string `json:"api_key" mapstructure:"api_key"`

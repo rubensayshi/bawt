@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 import (
 	"net/http"
@@ -25,7 +25,7 @@ type PluginInitializer interface {
 
 // WebServer describes the interface for webserver plugins
 type WebServer interface {
-	// Used internally by the `slick` library.
+	// Used internally by the `bawt` library.
 	InitWebServer(*Bot, []string)
 	RunServer()
 

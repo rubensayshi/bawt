@@ -1,4 +1,4 @@
-// Package plotberry is a plugin for Slick that reads Plotly graphs
+// Package plotberry is a plugin for bawt that reads Plotly graphs
 package plotberry
 
 import (
@@ -9,12 +9,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 	log "github.com/sirupsen/logrus"
 )
 
 type PlotBerry struct {
-	bot        *slick.Bot
+	bot        *bawt.Bot
 	totalUsers int
 	pingTime   time.Duration
 	celebrated bool
@@ -25,10 +25,10 @@ type TotalUsers struct {
 }
 
 func init() {
-	slick.RegisterPlugin(&PlotBerry{})
+	bawt.RegisterPlugin(&PlotBerry{})
 }
 
-func (plotberry *PlotBerry) InitPlugin(bot *slick.Bot) {
+func (plotberry *PlotBerry) InitPlugin(bot *bawt.Bot) {
 
 	plotberry.bot = bot
 	plotberry.celebrated = true
@@ -40,12 +40,12 @@ func (plotberry *PlotBerry) InitPlugin(bot *slick.Bot) {
 	go plotberry.launchWatcher(statchan)
 	go plotberry.launchCounter(statchan)
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: plotberry.ChatHandler,
 	})
 }
 
-func (plotberry *PlotBerry) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (plotberry *PlotBerry) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	if msg.MentionsMe && msg.Contains("how many user") {
 		msg.Reply(fmt.Sprintf("We got %d users!", plotberry.totalUsers))
 	}

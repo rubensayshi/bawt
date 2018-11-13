@@ -1,4 +1,4 @@
-// Package wicked is a plugin for Slick that facilitates conferences over Slack
+// Package wicked is a plugin for bawt that facilitates conferences over Slack
 package wicked
 
 /**
@@ -18,12 +18,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/CapstoneLabs/slick"
+	"github.com/gopherworks/bawt"
 )
 
 // Wicked stores the configuration for wicked
 type Wicked struct {
-	bot          *slick.Bot
+	bot          *bawt.Bot
 	confRooms    []string
 	meetings     map[string]*Meeting
 	pastMeetings []*Meeting
@@ -35,10 +35,10 @@ var (
 )
 
 func init() {
-	slick.RegisterPlugin(&Wicked{})
+	bawt.RegisterPlugin(&Wicked{})
 }
 
-func (wicked *Wicked) InitPlugin(bot *slick.Bot) {
+func (wicked *Wicked) InitPlugin(bot *bawt.Bot) {
 	wicked.bot = bot
 	wicked.meetings = make(map[string]*Meeting)
 
@@ -54,12 +54,12 @@ func (wicked *Wicked) InitPlugin(bot *slick.Bot) {
 		wicked.confRooms = append(wicked.confRooms, confroom)
 	}
 
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		MessageHandlerFunc: wicked.ChatHandler,
 	})
 }
 
-func (wicked *Wicked) ChatHandler(listen *slick.Listener, msg *slick.Message) {
+func (wicked *Wicked) ChatHandler(listen *bawt.Listener, msg *bawt.Message) {
 	bot := listen.Bot
 	uuidNow := time.Now()
 
@@ -161,7 +161,7 @@ continueLogging:
 	meeting.Logs = append(meeting.Logs, newMessage)
 }
 
-func (wicked *Wicked) FindAvailableRoom(fromRoom string) *slick.Channel {
+func (wicked *Wicked) FindAvailableRoom(fromRoom string) *bawt.Channel {
 	nextFree := ""
 	for _, confRoom := range wicked.confRooms {
 		_, occupied := wicked.meetings[confRoom]

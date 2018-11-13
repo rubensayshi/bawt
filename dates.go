@@ -1,4 +1,4 @@
-package slick
+package bawt
 
 import (
 	"strconv"

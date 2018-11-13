@@ -8,8 +8,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/CapstoneLabs/slick"
 	"github.com/codegangsta/negroni"
+	"github.com/gopherworks/bawt"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -21,7 +21,7 @@ var web *Webapp
 type Webapp struct {
 	config                *WebappConfig
 	store                 *sessions.CookieStore
-	bot                   *slick.Bot
+	bot                   *bawt.Bot
 	handler               *negroni.Negroni
 	privateRouter         *mux.Router
 	publicRouter          *mux.Router
@@ -37,10 +37,10 @@ type WebappConfig struct {
 }
 
 func init() {
-	slick.RegisterPlugin(&Webapp{})
+	bawt.RegisterPlugin(&Webapp{})
 }
 
-func (webapp *Webapp) InitWebServer(bot *slick.Bot, enabledPlugins []string) {
+func (webapp *Webapp) InitWebServer(bot *bawt.Bot, enabledPlugins []string) {
 	var conf struct {
 		Webapp WebappConfig
 	}
@@ -101,7 +101,7 @@ func (webapp *Webapp) RunServer() {
 }
 
 func (webapp *Webapp) GetSession(r *http.Request) *sessions.Session {
-	sess, err := web.store.Get(r, "slick")
+	sess, err := web.store.Get(r, "bawt")
 	if err != nil {
 		log.Println("web/session: warn: unable to decode Session cookie: ", err)
 	}

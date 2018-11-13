@@ -6,16 +6,16 @@ weight: 10
 Creating a new plugin is as simple as:
 
 1. Create a new go package (no `main()` function)
-2. Include a `slick.Listener`
+2. Include a `bawt.Listener`
 
 ```go
 // listenDeploy was hooked into a plugin elsewhere..
 func listenDeploy() {
 	keywords := []string{"project1", "project2", "project3"}
-	bot.Listen(&slick.Listener{
+	bot.Listen(&bawt.Listener{
 		Matches:        regexp.MustCompile("(can you|could you|please|plz|c'mon|icanhaz) deploy (" + strings.Join(keywords, "|") + ") (with|using)( revision| commit)? `?([a-z0-9]{4,42})`?"),
 		MentionsMeOnly: true,
-		MessageHandlerFunc: func(listen *slick.Listener, msg *slick.Message) {
+		MessageHandlerFunc: func(listen *bawt.Listener, msg *bawt.Message) {
 
 			projectName := msg.Match[2]
 			revision := msg.Match[5]
