@@ -3,7 +3,7 @@ package bawt
 import (
 	"time"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 // Channel is an abstraction of the Slack channels, with merged and

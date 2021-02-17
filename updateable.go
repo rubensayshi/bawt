@@ -3,6 +3,8 @@ package bawt
 import (
 	"fmt"
 	"sync"
+	
+	"github.com/slack-go/slack"
 )
 
 // UpdateableReply is a Reply that the bot sent, and that it is able
@@ -26,7 +28,9 @@ func (u *UpdateableReply) dispatch() {
 	}
 
 	if u.newMessage != "" {
-		u.reply.bot.Slack.UpdateMessage(u.reply.OutgoingMessage.Channel, u.msgTimestamp, u.newFormattedMessage())
+		u.reply.bot.Slack.UpdateMessage(
+			u.reply.OutgoingMessage.Channel, u.msgTimestamp,
+			slack.MsgOptionText(u.newFormattedMessage(), false))
 		u.newMessage = ""
 	}
 }

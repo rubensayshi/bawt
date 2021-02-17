@@ -14,7 +14,7 @@ import (
 
 	"github.com/boltdb/bolt"
 	"github.com/cskr/pubsub"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -143,8 +143,7 @@ func (bot *Bot) Run() {
 
 	initChatPlugins(bot)
 
-	bot.Slack = slack.New(bot.Config.ApiToken)
-	bot.Slack.SetDebug(bot.Config.Debug)
+	bot.Slack = slack.New(bot.Config.ApiToken, slack.OptionDebug(bot.Config.Debug))
 
 	rtm := bot.Slack.NewRTM()
 	bot.rtm = rtm

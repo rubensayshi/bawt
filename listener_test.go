@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 func TestListenerCheckParams(t *testing.T) {

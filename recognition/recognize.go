@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gopherworks/bawt"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	log "github.com/sirupsen/logrus"
 )
 

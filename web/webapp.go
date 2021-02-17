@@ -13,7 +13,7 @@ import (
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 var web *Webapp

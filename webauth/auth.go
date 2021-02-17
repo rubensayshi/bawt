@@ -8,7 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gopherworks/bawt"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	"golang.org/x/oauth2"
 )
 

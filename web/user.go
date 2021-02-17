@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 func userAsJavascript(user *slack.User) template.JS {

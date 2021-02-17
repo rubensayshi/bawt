@@ -7,7 +7,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 // Listener monitors slack for matching incoming messages and then

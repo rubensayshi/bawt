@@ -3,7 +3,7 @@ package bawt
 import (
 	"time"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 type ReactionListener struct {

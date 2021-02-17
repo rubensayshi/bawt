@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 // NextWeekdayTime from a given Time and a Weekday + hour + minute
