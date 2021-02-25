@@ -3,6 +3,7 @@ package bawt
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -259,7 +260,7 @@ func (bot *Bot) cacheUsers(users []slack.User) {
 	}
 }
 
-func (bot *Bot) cacheChannels(channels []slack.Channel, groups []slack.Group, ims []slack.IM) {
+func (bot *Bot) cacheChannels(channels []slack.Channel, groups []slack.Channel, ims []slack.Channel) {
 	log.Debugf("Channels: %v", len(channels))
 	log.Debugf("Groups: %v", len(groups))
 	log.Debugf("DM's: %v", len(ims))
@@ -269,11 +270,11 @@ func (bot *Bot) cacheChannels(channels []slack.Channel, groups []slack.Group, im
 	}
 
 	for _, group := range groups {
-		bot.updateChannel(ChannelFromSlackGroup(group))
+		bot.updateChannel(ChannelFromSlackChannel(group))
 	}
 
 	for _, im := range ims {
-		bot.updateChannel(ChannelFromSlackIM(im))
+		bot.updateChannel(ChannelFromSlackChannel(im))
 	}
 }
 
@@ -479,27 +480,36 @@ func (bot *Bot) handleRTMEvent(event *slack.RTMEvent) {
 		}).Error("Real Time Messenger Error.")
 	case *slack.ConnectedEvent:
 		// Replacing ev.Info.Channels
-		channels, err := client.GetChannels(false)
+		channels, _, err := client.GetConversations(&slack.GetConversationsParameters{
+			Types:           []string{"public_channel", "private_channel"},
+			ExcludeArchived: "false",
+		})
 		if err != nil {
-			panic("SLACK DEPRECATED ANOTHER API LOL")
+			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
 		}
 
 		// Replacing ev.Info.Groups
-		groups, err := client.GetGroups(false)
+		groups, _, err := client.GetConversations(&slack.GetConversationsParameters{
+			Types:           []string{"mpim"},
+			ExcludeArchived: "false",
+		})
 		if err != nil {
-			panic("SLACK DEPRECATED ANOTHER API LOL")
+			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
 		}
 
 		// Replacing ev.Info.IMs
-		ims, err := client.GetIMChannels()
+		ims, _, err := client.GetConversations(&slack.GetConversationsParameters{
+			Types:           []string{"im"},
+			ExcludeArchived: "false",
+		})
 		if err != nil {
-			panic("SLACK DEPRECATED ANOTHER API LOL")
+			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
 		}
 
 		// Replacing ev.Info.Users
 		users, err := client.GetUsers()
 		if err != nil {
-			panic("SLACK DEPRECATED ANOTHER API LOL")
+			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
 		}
 
 		log.Printf("Bot connected, connection_count=%d", ev.ConnectionCount)
@@ -510,7 +520,7 @@ func (bot *Bot) handleRTMEvent(event *slack.RTMEvent) {
 		for _, channelName := range bot.Config.JoinChannels {
 			channel := bot.GetChannelByName(channelName)
 			if channel != nil && !channel.IsMember {
-				bot.Slack.JoinChannel(channel.ID)
+				bot.Slack.JoinConversation(channel.ID)
 			}
 		}
 
@@ -783,13 +793,20 @@ func (bot *Bot) OpenIMChannelWith(user *slack.User) *Channel {
 	}
 
 	log.Printf("Opening a new IM conversation with %q (%s)", user.ID, user.Name)
-	_, _, chanID, err := bot.Slack.OpenIMChannel(user.ID)
+	chann, _, _, err := bot.Slack.OpenConversation(&slack.OpenConversationParameters{Users: []string{user.ID}})
 	if err != nil {
+		log.WithError(err).
+			WithFields(log.Fields{
+				"Type":     "CantOpenIMChannel",
+				"UserID":   user.ID,
+				"UserName": user.Name,
+			}).
+			Warn("Error opening channel.")
 		return nil
 	}
 
 	c := Channel{
-		ID:   chanID,
+		ID:   chann.ID,
 		IsIM: true,
 		User: user.ID,
 	}
