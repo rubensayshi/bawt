@@ -1,25 +1,50 @@
 module github.com/gopherworks/bawt
 
 require (
-	github.com/BurntSushi/toml v0.0.0-20170626110600-a368813c5e64 // indirect
 	github.com/boltdb/bolt v1.3.1
 	github.com/codegangsta/negroni v1.0.0
-	github.com/cskr/pubsub v1.0.1
-	github.com/gorilla/context v1.1.1
-	github.com/gorilla/mux v1.6.2
-	github.com/gorilla/sessions v1.1.3
+	github.com/cskr/pubsub v1.0.2
+	github.com/gorilla/context v1.1.2
+	github.com/gorilla/mux v1.8.1
+	github.com/gorilla/sessions v1.2.1
 	github.com/jmcvetta/napping v3.2.0+incompatible
-	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
-	github.com/kr/pretty v0.1.0 // indirect
-	github.com/kr/pty v1.1.3
-	github.com/sirupsen/logrus v1.1.1
-	github.com/slack-go/slack v0.8.1
-	github.com/spf13/viper v1.2.0
-	github.com/stretchr/testify v1.2.2
-	golang.org/x/net v0.0.0-20190603091049-60506f45cf65
-	golang.org/x/oauth2 v0.0.0-20181003184128-c57b0facaced
-	google.golang.org/appengine v1.6.7 // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
+	github.com/kr/pty v1.1.8
+	github.com/sirupsen/logrus v1.9.3
+	github.com/slack-go/slack v0.14.0
+	github.com/spf13/viper v1.19.0
+	github.com/stretchr/testify v1.9.0
+	golang.org/x/net v0.29.0
+	golang.org/x/oauth2 v0.23.0
 )
 
-go 1.13
+require (
+	github.com/creack/pty v1.1.9 // indirect
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
+	github.com/fsnotify/fsnotify v1.7.0 // indirect
+	github.com/gorilla/securecookie v1.1.2 // indirect
+	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
+	github.com/magiconair/properties v1.8.7 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
+	github.com/sagikazarmark/locafero v0.4.0 // indirect
+	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+	github.com/sourcegraph/conc v0.3.0 // indirect
+	github.com/spf13/afero v1.11.0 // indirect
+	github.com/spf13/cast v1.6.0 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/subosito/gotenv v1.6.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/multierr v1.9.0 // indirect
+	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+go 1.19
+
+toolchain go1.23.1

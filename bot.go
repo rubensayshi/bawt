@@ -15,8 +15,8 @@ import (
 
 	"github.com/boltdb/bolt"
 	"github.com/cskr/pubsub"
-	"github.com/slack-go/slack"
 	log "github.com/sirupsen/logrus"
+	"github.com/slack-go/slack"
 	"github.com/spf13/viper"
 )
 
@@ -482,7 +482,7 @@ func (bot *Bot) handleRTMEvent(event *slack.RTMEvent) {
 		// Replacing ev.Info.Channels
 		channels, _, err := client.GetConversations(&slack.GetConversationsParameters{
 			Types:           []string{"public_channel", "private_channel"},
-			ExcludeArchived: "false",
+			ExcludeArchived: false,
 		})
 		if err != nil {
 			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
@@ -491,7 +491,7 @@ func (bot *Bot) handleRTMEvent(event *slack.RTMEvent) {
 		// Replacing ev.Info.Groups
 		groups, _, err := client.GetConversations(&slack.GetConversationsParameters{
 			Types:           []string{"mpim"},
-			ExcludeArchived: "false",
+			ExcludeArchived: false,
 		})
 		if err != nil {
 			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
@@ -500,7 +500,7 @@ func (bot *Bot) handleRTMEvent(event *slack.RTMEvent) {
 		// Replacing ev.Info.IMs
 		ims, _, err := client.GetConversations(&slack.GetConversationsParameters{
 			Types:           []string{"im"},
-			ExcludeArchived: "false",
+			ExcludeArchived: false,
 		})
 		if err != nil {
 			panic(fmt.Sprintf("SLACK DEPRECATED ANOTHER API LOL: %s", err))
